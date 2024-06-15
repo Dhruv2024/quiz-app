@@ -53,11 +53,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('currentQuestion', JSON.stringify(currentQuestion));
+    if (!testEnded) {
+      localStorage.setItem('currentQuestion', JSON.stringify(currentQuestion));
+    }
   }, [currentQuestion]);
-
   useEffect(() => {
-    localStorage.setItem('timeLeft', time);
+    if (!testEnded) {
+      localStorage.setItem('timeLeft', time);
+    }
   }, [time]);
 
   if (newUser) {
@@ -74,9 +77,17 @@ function App() {
     )
   }
   if (testEnded) {
+    localStorage.clear();
     return (
       <div>
-        Your Score is : {score.current}
+        <div>
+          Your Score is : {score.current}
+        </div>
+        <button onClick={() => {
+          location.reload()
+        }}>
+          Click here to attempt quiz again
+        </button>
       </div>
     )
   }
